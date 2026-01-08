@@ -3,6 +3,7 @@
 #include <string.h>
 #include <curl/curl.h>
 #include "cJSON.h"
+#include <time.h>
 
 struct MemoryStruct {
     char *memory;
@@ -58,7 +59,7 @@ double* get_open_prices(const char* symbol, const char* interval, const char* ra
 }
 
 void handle_input(char **symbol, char **range, char **file_name) {
-    static int i = 0;
+    static int i = 10;
     i++;
     char buffer[100];
     char default_file[20];
@@ -113,7 +114,6 @@ int add_another_file() {
 }
 
 void write_test_file(const char* file_name, double* prices, int count) {
-
     char full_path[256];
     snprintf(full_path, sizeof(full_path), "input/%s", file_name);
 
@@ -125,17 +125,22 @@ void write_test_file(const char* file_name, double* prices, int count) {
 
     fprintf(f, "%d\n", count);
 
+    srand(time(NULL));
     for (int i = 0; i < count; i++) {
-        if (prices[i] >= 0) {
-            fprintf(f, "%.2f", prices[i]);
-        } else {
-            fprintf(f, "0.00"); //this shouldn't really happen as long as there aren't any bugs in the api
-        }
+        double x = prices[i];
+        if (x < 0) x = 100.0;
+
+        double i1 = x;
+        double i2 = 2 * x;
+        double i3 = x + 5;
+
+        fprintf(f, "%.2f %.2f %.2f", i1, i2, i3);
         if (i < count-1)
             fprintf(f, "\n");
     }
+
     fclose(f);
-    printf("Fișierul %s a fost generat cu succes.\n", full_path);
+    printf("Fișierul pentru Task 2 %s a fost generat.\n", full_path);
 }
 
 void get_and_write_prices(const char* symbol, const char* range, const char* file_name){
