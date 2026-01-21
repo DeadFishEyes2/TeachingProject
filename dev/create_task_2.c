@@ -97,7 +97,7 @@ void handle_input(char **symbol, char **range, char **file_name) {
 int add_another_file() {
     char buffer[100];
 
-    printf("\nVrei să creezi un alt fișier? y/n (default = n): ");
+    printf("\nCreate another file? y/n (default = n): ");
     if (fgets(buffer, sizeof(buffer), stdin)) {
         buffer[strcspn(buffer, "\n")] = 0;
 

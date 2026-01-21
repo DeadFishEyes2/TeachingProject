@@ -57,7 +57,7 @@ double* get_open_prices(const char* symbol, const char* interval, const char* ra
 }
 
 void handle_input(char **symbol, char **range, char **file_name) {
-    static int i = 0;
+    static int i = 30;
     i++;
     char buffer[100];
     char default_file[20];
